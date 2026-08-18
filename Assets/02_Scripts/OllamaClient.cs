@@ -21,7 +21,8 @@ public class OllamaClient : MonoBehaviour
     // 요청 코루틴을 가동하는 래퍼 메서드 (Send Button이 호출할 메서드)
     public void SendChat(List<OllamaMessage> messages)
     {
-        // TODO: 전송 코루틴 호출
+        // 전송 코루틴 호출
+        StartCoroutine(PostRequest(messages));
     }
 
     public IEnumerator PostRequest(List<OllamaMessage> messages)
