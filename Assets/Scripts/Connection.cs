@@ -15,7 +15,7 @@ public class Connection : MonoBehaviour
         string json =
             $@"{{
                 ""model"":""{modelName}"",
-                ""message"": [
+                ""messages"": [
                     {{
                         ""rule"": ""user"",
                         ""content"": ""안녕! 한 문장으로 자기를 소개해줘.""
@@ -24,6 +24,7 @@ public class Connection : MonoBehaviour
                 ""stream"": false
             }}";
         
+        Debug.Log(json);
         // REST API 전송
         UnityWebRequest request = UnityWebRequest.Post(url, json, "application/json");
         Debug.Log("[접속] Ollama 서버에 요청 전송 중 ...");
