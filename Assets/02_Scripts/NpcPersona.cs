@@ -45,7 +45,7 @@ public class OllamaResponse
 [
    1 =>  {"role": "system", "content": "너는 마법사야.."},
    2 => 1 + {"role": "user", "content": "흑마법에 대해 알고싶어요"},
-   3 => {"role": "assistant", "content": "알려줄수 없네"}
+   3 => 1 + 2 + {"role": "assistant", "content": "알려줄수 없네"}
    4 => 1 + 2 + 3 + {"role": "user", "content": "정말 알고싶어요"},
 ]
  */
