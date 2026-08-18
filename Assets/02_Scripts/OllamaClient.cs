@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 // Ollama REST API 사용해서 통신
@@ -13,6 +14,12 @@ public class OllamaClient : MonoBehaviour
     // 이벤트 : LLM 응답 도착 / 로딩 상태 변경
     public static event Action<string> OnResponseReceived;
     public static event Action<bool> OnLoadingChanged;
+    
+    // 요청 코루틴을 가동하는 래퍼 메서드 (Send Button이 호출할 메서드)
+    public void SendChat(List<OllamaMessage> messages)
+    {
+        // TODO: 전송 코루틴 호출
+    }
     
     
 }
