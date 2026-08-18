@@ -29,7 +29,9 @@ public class OllamaClient : MonoBehaviour
     {
         // 대화창 UI ( 생각중 ... )
         OnLoadingChanged?.Invoke(true);
-
+        
+        Debug.Log("요청 전송중 ...");
+        
         // 직렬화 : 객체(클래스) => 문자열(JSON)
         string json = JsonUtility.ToJson(new OllamaRequest
         {
@@ -52,6 +54,10 @@ public class OllamaClient : MonoBehaviour
         {
             Debug.Log(request.downloadHandler.text);
             OnResponseReceived?.Invoke(request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.Log(request.error);
         }
         
         OnLoadingChanged?.Invoke(false);
