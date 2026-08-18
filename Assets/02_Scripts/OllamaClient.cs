@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -39,7 +40,18 @@ public class OllamaClient : MonoBehaviour
         // UnityWebRequest 를 using 구문 사용 (자동 메모리 해제)
         using UnityWebRequest request = new UnityWebRequest(API_URL, "POST");
 
-        
+        request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json));
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.timeout = 60;
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log(request.downloadHandler.text);
+            OnResponseReceived?.Invoke(request.downloadHandler.text);
+        }
         
         OnLoadingChanged?.Invoke(false);
     }
