@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 // Ollama REST API 사용해서 통신
 // 엔드포인트 => POST http://localhost:11434/api/chat
@@ -20,6 +22,25 @@ public class OllamaClient : MonoBehaviour
     {
         // TODO: 전송 코루틴 호출
     }
-    
-    
+
+    public IEnumerator PostRequest(List<OllamaMessage> messages)
+    {
+        // 대화창 UI ( 생각중 ... )
+        OnLoadingChanged?.Invoke(true);
+
+        // 직렬화 : 객체(클래스) => 문자열(JSON)
+        string json = JsonUtility.ToJson(new OllamaRequest
+        {
+            model = MODEL,
+            messages = messages,
+            stream = false
+        });
+        
+        // UnityWebRequest 를 using 구문 사용 (자동 메모리 해제)
+        using UnityWebRequest request = new UnityWebRequest(API_URL, "POST");
+
+        
+        
+        OnLoadingChanged?.Invoke(false);
+    }
 }
