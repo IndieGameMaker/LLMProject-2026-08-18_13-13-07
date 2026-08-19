@@ -809,6 +809,11 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3277141943812548315, guid: c83ca4c25aca54104b0094bb281201b1, type: 3}
+      propertyPath: m_Text
+      value: "\uC548\uB155\uD558\uC138\uC694. \uC800\uB294 \uBC29\uB791\uAC80\uAC1D
+        \uC7AD\uC785\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
     - target: {fileID: 4048784973715118788, guid: c83ca4c25aca54104b0094bb281201b1, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -901,10 +906,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5272160935473523518, guid: c83ca4c25aca54104b0094bb281201b1, type: 3}
+      propertyPath: m_text
+      value: "\uC548\uB155\uD558\uC138\uC694. \uC800\uB294 \uBC29\uB791\uAC80\uAC1D
+        \uC7AD\uC785\uB2C8\uB2E4.\u200B"
+      objectReference: {fileID: 0}
     - target: {fileID: 5327324259669945440, guid: c83ca4c25aca54104b0094bb281201b1, type: 3}
       propertyPath: m_text
       value: "\uC548\uB155\uD558\uC138\uC694. \uC800\uB294 \uBC29\uB791\uAC80\uAC1D
         \uC7AD\uC785\uB2C8\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246775483355890510, guid: c83ca4c25aca54104b0094bb281201b1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9167728977286798574, guid: c83ca4c25aca54104b0094bb281201b1, type: 3}
       propertyPath: m_AnchoredPosition.x
