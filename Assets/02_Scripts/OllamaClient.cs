@@ -36,8 +36,43 @@ public class OllamaClient : MonoBehaviour
             StartCoroutine(PostRequest(messages));
         }
     }
+    
+    // 스트리밍 방식으로 요청 메서드
+    private IEnumerator PostRequestStream(List<OllamaMessage> messages)
+    {
+        OnLoadingChanged?.Invoke(true);
+        string json = JsonUtility.ToJson(new OllamaRequest
+        {
+            model = MODEL,
+            messages = messages,
+            stream = true  // NDJson 스트리밍 활성화
+        });
+        
+        var handler = new NDJsonDownloadHandler(OnTokenReceived);
+        
+        using UnityWebRequest request = new UnityWebRequest(API_URL, "POST");
+        request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json));
+        request.downloadHandler = handler;
+        request.timeout = 60;
+        request.SetRequestHeader("Content-Type", "application/json");
+        
+        yield return request.SendWebRequest();
 
-    public IEnumerator PostRequest(List<OllamaMessage> messages)
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            // 최종 청크를 다 받은 후에 전체 메시지를 전달
+            OnResponseReceived?.Invoke(handler.FullBuffer);
+        }
+        else
+        {
+            Debug.Log(request.error);
+        }
+        
+        OnLoadingChanged?.Invoke(false);
+    }
+    
+    // 스트리밍 방식 X
+    private IEnumerator PostRequest(List<OllamaMessage> messages)
     {
         // 대화창 UI ( 생각중 ... )
         OnLoadingChanged?.Invoke(true);
