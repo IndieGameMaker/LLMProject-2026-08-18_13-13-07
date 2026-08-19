@@ -26,6 +26,7 @@ public class ChatManager : MonoBehaviour
     private void OnEnable()
     {
         _sendButton.onClick.AddListener(OnSendButtonClick);
+        _userInputField.onSubmit.AddListener( _ => OnSendButtonClick());
         // 응답이 수신되었을 때 호출되는 이벤트에 연결
         OllamaClient.OnResponseReceived += ResponseHandler;
     }
@@ -33,6 +34,7 @@ public class ChatManager : MonoBehaviour
     private void OnDisable()
     {
         _sendButton.onClick.RemoveListener(OnSendButtonClick);
+        _userInputField.onSubmit.RemoveAllListeners();
         OllamaClient.OnResponseReceived -= ResponseHandler;
     }
     
