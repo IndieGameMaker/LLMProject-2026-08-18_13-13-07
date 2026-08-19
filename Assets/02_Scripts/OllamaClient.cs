@@ -29,6 +29,7 @@ public class OllamaClient : MonoBehaviour
         if (isStreaming)
         {
             // 스트리밍 방식 전송 코루틴
+            StartCoroutine(PostRequestStream(messages));
         }
         else
         {
