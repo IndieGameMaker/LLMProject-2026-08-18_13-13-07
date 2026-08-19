@@ -16,6 +16,12 @@ public class ChatManager : MonoBehaviour
     
     // 대화 히스토리 관리를 위한 컬렉션
     public List<OllamaMessage> _history = new();
+
+    private void Awake()
+    {
+        _ollamaClient = GetComponent<OllamaClient>();
+        LoadPersona();
+    }
     
     // 페르소나 로딩
     private void LoadPersona()
