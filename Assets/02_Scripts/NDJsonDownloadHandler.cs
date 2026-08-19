@@ -19,4 +19,34 @@ public class NDJsonDownloadHandler : DownloadHandlerScript
     
     // 생성자
     public NDJsonDownloadHandler(Action<string> onToken) => _onToken = onToken;
+    
+    // 새 데이터(청크)가 도착할 때 마다 자동으로 호출되는 콜백
+    protected override bool ReceiveData(byte[] data, int dataLength)
+    {
+        // 1. 수신된 바이트를 UTF-8 문자열로 디코딩
+        string buffer = Encoding.UTF8.GetString(data, 0, dataLength);
+        // 2. 이전 청크에서 남은 불완전 조각을 이어 붙임
+        _lineBuffer.Append(buffer);
+        string[] lines = _lineBuffer.ToString().Split('\n');
+        // 3. 마지막 원소는 불완전한 조각으로 판정 => _lineBuffer 에 추가
+        _lineBuffer.Clear();
+        _lineBuffer.Append(lines[lines.Length - 1]);
+        
+        // 4. 완전한 청크들만 파싱
+        for (int i = 0; i < lines.Length - 1; i++)
+        {
+            string line = lines[i];
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            
+            // 역직렬화 처리
+            var res = JsonUtility.FromJson<OllamaResponse>(line);
+            // 역직렬화 후에 Null 체크
+            if (res?.message == null) continue;
+
+            _fullBuffer.Append(res.message.content);
+            _onToken?.Invoke(res.message.content);
+        }
+        
+        return true;
+    }
 }

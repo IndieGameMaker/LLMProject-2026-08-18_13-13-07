@@ -17,12 +17,24 @@ public class OllamaClient : MonoBehaviour
     // 이벤트 : LLM 응답 도착 / 로딩 상태 변경
     public static event Action<string> OnResponseReceived;
     public static event Action<bool> OnLoadingChanged;
+    // 토큰단위로 이벤트 발생 -> 실시간으로 텍스트를 갱신
+    public static event Action<string> OnTokenReceived;
+    
+    // 스트리밍 방식
+    [SerializeField] private bool isStreaming = true;
     
     // 요청 코루틴을 가동하는 래퍼 메서드 (Send Button이 호출할 메서드)
     public void SendChat(List<OllamaMessage> messages)
     {
-        // 전송 코루틴 호출
-        StartCoroutine(PostRequest(messages));
+        if (isStreaming)
+        {
+            // 스트리밍 방식 전송 코루틴
+        }
+        else
+        {
+            // 전송 코루틴 호출
+            StartCoroutine(PostRequest(messages));
+        }
     }
 
     public IEnumerator PostRequest(List<OllamaMessage> messages)
