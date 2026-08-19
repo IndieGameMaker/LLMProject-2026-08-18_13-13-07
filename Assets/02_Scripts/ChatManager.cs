@@ -33,6 +33,10 @@ public class ChatManager : MonoBehaviour
                       $"말투 : {_npcPersona.speechStyle} " +
                       "반드시 캐릭터 성격을 유지하고, 한글로 답하세요."
         });
+
+        _npcNameText.text = _npcPersona.name;
+        _npcDialogText.text = _npcPersona.greeting;
+
     }
     
 }
