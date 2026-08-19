@@ -26,11 +26,14 @@ public class ChatManager : MonoBehaviour
     private void OnEnable()
     {
         _sendButton.onClick.AddListener(OnSendButtonClick);
+        // 응답이 수신되었을 때 호출되는 이벤트에 연결
+        OllamaClient.OnResponseReceived += ResponseHandler;
     }
 
     private void OnDisable()
     {
         _sendButton.onClick.RemoveListener(OnSendButtonClick);
+        OllamaClient.OnResponseReceived -= ResponseHandler;
     }
     
     // 페르소나 로딩
@@ -73,5 +76,16 @@ public class ChatManager : MonoBehaviour
         // 전체 메세지 전송 => LLM
         _ollamaClient.SendChat(_history);
     }
-    
+
+    private void ResponseHandler(string response)
+    {
+        // 대화 맥락 유지용 히스토리에 추가
+        _history.Add(new OllamaMessage
+        {
+            role = "assistant",
+            content = response
+        });
+
+        _npcDialogText.text = response;
+    }
 }
