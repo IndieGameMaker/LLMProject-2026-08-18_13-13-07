@@ -29,6 +29,9 @@ public class ChatManager : MonoBehaviour
         _userInputField.onSubmit.AddListener( _ => OnSendButtonClick());
         // 응답이 수신되었을 때 호출되는 이벤트에 연결
         OllamaClient.OnResponseReceived += ResponseHandler;
+        
+        // 토큰 수신 이벤트 구독
+        OllamaClient.OnTokenReceived += TokenHandler;
     }
 
     private void OnDisable()
@@ -36,7 +39,14 @@ public class ChatManager : MonoBehaviour
         _sendButton.onClick.RemoveListener(OnSendButtonClick);
         _userInputField.onSubmit.RemoveAllListeners();
         OllamaClient.OnResponseReceived -= ResponseHandler;
+        OllamaClient.OnTokenReceived -= TokenHandler;
     }
+
+    private void TokenHandler(string token)
+    {
+        _npcDialogText.text += token;
+    }
+    
     
     // 페르소나 로딩
     private void LoadPersona()
