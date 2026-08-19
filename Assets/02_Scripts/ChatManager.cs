@@ -32,6 +32,8 @@ public class ChatManager : MonoBehaviour
         
         // 토큰 수신 이벤트 구독
         OllamaClient.OnTokenReceived += TokenHandler;
+
+        OllamaClient.OnLoadingChanged += LoadingChangeHandler;
     }
 
     private void OnDisable()
@@ -40,8 +42,16 @@ public class ChatManager : MonoBehaviour
         _userInputField.onSubmit.RemoveAllListeners();
         OllamaClient.OnResponseReceived -= ResponseHandler;
         OllamaClient.OnTokenReceived -= TokenHandler;
+        
+        OllamaClient.OnLoadingChanged -= LoadingChangeHandler;
     }
 
+    private void LoadingChangeHandler(bool isLoading)
+    {
+        if (isLoading)
+            _npcDialogText.text = string.Empty;
+    }
+    
     private void TokenHandler(string token)
     {
         _npcDialogText.text += token;
