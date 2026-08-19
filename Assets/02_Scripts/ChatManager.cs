@@ -22,6 +22,16 @@ public class ChatManager : MonoBehaviour
         _ollamaClient = GetComponent<OllamaClient>();
         LoadPersona();
     }
+
+    private void OnEnable()
+    {
+        _sendButton.onClick.AddListener(OnSendButtonClick);
+    }
+
+    private void OnDisable()
+    {
+        _sendButton.onClick.RemoveListener(OnSendButtonClick);
+    }
     
     // 페르소나 로딩
     private void LoadPersona()
@@ -43,6 +53,25 @@ public class ChatManager : MonoBehaviour
         _npcNameText.text = _npcPersona.name;
         _npcDialogText.text = _npcPersona.greeting;
 
+    }
+
+    private void OnSendButtonClick()
+    {
+        string userText = _userInputField.text.Trim();
+        if (string.IsNullOrEmpty(userText)) return;
+        
+        // 사용자가 입력한 메시지를 히스토리에 저장 -> 전체 메시지(_history)를 LLM 전송 -> 응답 -> UI갱신
+        _history.Add(new OllamaMessage
+        {
+            role = "user",
+            content = userText
+        });
+
+        // UI 정리
+        _userInputField.text = string.Empty;
+        _npcDialogText.text = "NPC 생각 중 ...";
+        // 전체 메세지 전송 => LLM
+        _ollamaClient.SendChat(_history);
     }
     
 }
