@@ -40,6 +40,20 @@ public class OllamaResponse
     public OllamaMessage message;
 }
 
+[Serializable]
+public class NpcChatRequest
+{
+    public string player_id;
+    public string npc_id;
+    public string message;
+}
+
+[Serializable]
+public class NpcChatResponse
+{
+    public string reply;
+    public string npc_name;
+}
 
 /*
 [
