@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2e96f03ebf34c55a1af7b594d2174e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OllamaClient
+  isStreaming: 1
 --- !u!114 &42617130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +181,7 @@ MonoBehaviour:
   _npcDialogText: {fileID: 2120770137}
   _userInputField: {fileID: 2120770136}
   _sendButton: {fileID: 2120770135}
+  _npcType: 1
   _history: []
 --- !u!1 &330585543
 GameObject:
@@ -919,6 +921,10 @@ PrefabInstance:
     - target: {fileID: 7246775483355890510, guid: c83ca4c25aca54104b0094bb281201b1, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502604315514118444, guid: c83ca4c25aca54104b0094bb281201b1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -14.651978
       objectReference: {fileID: 0}
     - target: {fileID: 9167728977286798574, guid: c83ca4c25aca54104b0094bb281201b1, type: 3}
       propertyPath: m_AnchoredPosition.x
