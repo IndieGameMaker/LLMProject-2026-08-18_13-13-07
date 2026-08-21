@@ -41,6 +41,17 @@ public class OllamaClient : MonoBehaviour
             StartCoroutine(PostRequest(messages));
         }
     }
+
+    public void SendToNpc(string npcId, string message)
+    {
+        var body = new NpcChatRequest
+        {
+            player_id = "player1",
+            npc_id = npcId,
+            message = message
+        };
+        StartCoroutine(PostToNpc(JsonUtility.ToJson(body)));
+    }
     
     // 스트리밍 방식으로 요청 메서드
     private IEnumerator PostRequestStream(List<OllamaMessage> messages)
