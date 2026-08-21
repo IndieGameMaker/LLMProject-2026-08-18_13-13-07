@@ -28,7 +28,7 @@ public class ChatManager : MonoBehaviour
     private void Awake()
     {
         _ollamaClient = GetComponent<OllamaClient>();
-        LoadPersona();
+        // LoadPersona();
     }
 
     private void OnEnable()
@@ -104,7 +104,10 @@ public class ChatManager : MonoBehaviour
         _userInputField.text = string.Empty;
         _npcDialogText.text = "NPC 생각 중 ...";
         // 전체 메세지 전송 => LLM
-        _ollamaClient.SendChat(_history);
+        // _ollamaClient.SendChat(_history);
+        
+        _npcNameText.text = _npcType.ToString();
+        _ollamaClient.SendToNpc(_npcType.ToString(), userText);
     }
 
     private void ResponseHandler(string response)
