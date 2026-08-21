@@ -9,8 +9,12 @@ using UnityEngine.Networking;
 // 엔드포인트 => POST http://localhost:11434/api/chat
 public class OllamaClient : MonoBehaviour
 {
-    // 엔드포인트
-    private const string API_URL = "http://localhost:11434/api/chat";
+    // 로컬 엔드포인트
+    // private const string API_URL = "http://localhost:11434/api/chat";
+    
+    // 리모트 엔드포인트
+    private const string API_URL = "http://localhost:8000/npc/chat";
+    
     // 모델
     private const string MODEL = "gemma4:e2b";
     
@@ -113,5 +117,28 @@ public class OllamaClient : MonoBehaviour
         }
         
         OnLoadingChanged?.Invoke(false);
+    }
+    
+    // NPC 지정한 프로토콜
+    private IEnumerator PostToNpc(string json)
+    {
+        using UnityWebRequest request = new UnityWebRequest(API_URL, "POST");
+        request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json));
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.timeout = 120;
+        request.SetRequestHeader("Content-Type", "application/json");
+        
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            var res = JsonUtility.FromJson<NpcChatResponse>(request.downloadHandler.text);
+            OnResponseReceived?.Invoke(res.reply);
+        }
+        else
+        {
+            Debug.Log(request.error);
+            OnResponseReceived?.Invoke("서버에 연결할 수 없습니다...");
+        }
     }
 }
